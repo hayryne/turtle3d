@@ -1,0 +1,27 @@
+{
+  "name": "turtle3d",
+  "version": "0.0.1",
+  "description": "3d turtle graphics",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hayryne/turtle3d.git"
+  },
+  "author": "hayryne",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/hayryne/turtle3d/issues"
+  },
+  "homepage": "https://github.com/hayryne/turtle3d#readme",
+  "devDependencies": {
+    "@babylonjs/core": "^4.0.3",
+    "@babylonjs/materials": "^4.0.3",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.2",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
+  },
+  "dependencies": {}
+}
