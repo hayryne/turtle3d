@@ -12,14 +12,17 @@ const canvas = document.getElementById("renderCanvas") as HTMLCanvasElement;
 const engine = new Engine(canvas);
 var scene = new Scene(engine);
 
-var camera = new FreeCamera("camera", new Vector3(0, 0, -200), scene);
+var camera = new FreeCamera("camera", new Vector3(100, 75, 100), scene);
 
 camera.setTarget(Vector3.Zero())
 camera.attachControl(canvas, true)
 
 engine.runRenderLoop(() => scene.render())
 
-let currentAngle = 0;
+enum Direction { Horizontal, Vertical }
+
+let currentZenithAngle = 0;
+let currentAzimuthAngle = 0;
 let currentPosition = new Vector3(0, 0, 0)
 let targetPosition = new Vector3(0, 0, 0)
 
@@ -44,27 +47,48 @@ const walk = (distance : number) => {
 }
 
 function getNextTargetPosition(distance : number) {
-    targetPosition = new Vector3(
-        Math.cos(currentAngle * Math.PI/180) * distance + currentPosition.x,
-        Math.sin(currentAngle * Math.PI/180) * distance + currentPosition.y,
-        currentPosition.z)
+    let position = new Vector3(
+        distance * Math.sin(currentAzimuthAngle) * Math.cos(currentZenithAngle),
+        distance * Math.sin(currentZenithAngle),
+        distance * Math.cos(currentAzimuthAngle) * Math.cos(currentZenithAngle)
+    )
+
+    targetPosition = currentPosition.add(position)
 }
 
-const queueAction = (action : Function) => setTimeout(action, 50)
+const queueAction = (action : Function) => setTimeout(action, 25)
 
-const turn = (turnAngle : number) => queueAction(() => {
-    currentAngle += turnAngle
+const turn = (turnAngle : number, direction : Direction) => queueAction(() => {
+    if (direction === Direction.Horizontal) {
+        currentAzimuthAngle += turnAngle * Math.PI / 180
+    }
+
+    if (direction === Direction.Vertical) {
+        currentZenithAngle += turnAngle * Math.PI / 180
+    }
     
     executeNextAction()
 })
 
+
 let actions = [
     () => walk(50),
-    () => turn(90),
+    () => turn(90, Direction.Horizontal),
     () => walk(50),
-    () => turn(90),
+    () => turn(90, Direction.Horizontal),
     () => walk(50),
-    () => turn(90),
+    () => turn(90, Direction.Horizontal),
+    () => walk(50),
+    () => turn(90, Direction.Vertical),
+    () => walk(50),
+    () => turn(-90, Direction.Vertical),
+    () => turn(90, Direction.Horizontal),
+    () => walk(50),
+    () => turn(90, Direction.Horizontal),
+    () => walk(50),
+    () => turn(90, Direction.Horizontal),
+    () => walk(50),
+    () => turn(90, Direction.Horizontal),
     () => walk(50)
 ]
 
