@@ -32,7 +32,7 @@ const scene = createScene()
 const actions = [];
 
 const currentAngles = { zenith: 0, azimuth: 0 }
-const positions = { current: Vector3.Zero(), destination: Vector3.Zero() }
+const positions = { start: Vector3.Zero(), current: Vector3.Zero(), destination: Vector3.Zero() }
 
 const createLine = (pos1 : Vector3, pos2 : Vector3) =>
   Mesh.CreateTube('line', [pos1, pos2], 0.5, 10, null, null, scene)
@@ -41,13 +41,16 @@ const walkTowardsCurrentDestination = () : void => {
   const towardsNew = positions.destination.subtract(positions.current).normalize()
   const nextPosition = positions.current.add(towardsNew)
 
-  createLine(positions.current, nextPosition)
+  const line = createLine(positions.start, nextPosition)
   positions.current = nextPosition
 
   const destinationReached = positions.current.equalsWithEpsilon(positions.destination, 0.01)
 
   if (!destinationReached) {
-    queueAction(() => walkTowardsCurrentDestination())
+    queueAction(() => {
+      walkTowardsCurrentDestination()
+      line.dispose()
+    })
   } else {
     executeNextAction()
   }
@@ -63,6 +66,8 @@ const walk = (distance : number) => {
 }
 
 const setNextTargetPosition = (distance : number) => {
+  positions.start = positions.current
+
   let position = new Vector3(
     distance * Math.sin(currentAngles.azimuth) * Math.cos(currentAngles.zenith),
     distance * Math.sin(currentAngles.zenith),
