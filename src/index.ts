@@ -1,22 +1,4 @@
 import { walk, turnHorizontal, turnVertical, start } from './turtle'
+import { drawDragonCurve } from '../models/dragonCurve'
 
-walk(50)
-turnHorizontal(90)
-walk(50)
-turnHorizontal(90)
-walk(50)
-turnHorizontal(90)
-walk(50)
-turnVertical(90)
-walk(50)
-turnVertical(-90)
-turnHorizontal(90)
-walk(50)
-turnHorizontal(90)
-walk(50)
-turnHorizontal(90)
-walk(50)
-turnHorizontal(90)
-walk(50)
-
-start()
+drawDragonCurve(10)

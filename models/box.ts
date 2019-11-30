@@ -1,0 +1,41 @@
+import { walk, turnHorizontal, turnVertical, start } from '../src/turtle'
+
+const drawBox = () => {
+  walk(50)
+  turnHorizontal(90)
+  walk(50)
+  turnHorizontal(90)
+  walk(50)
+  turnHorizontal(90)
+  walk(50)
+  turnVertical(90)
+  walk(50)
+  turnVertical(-90)
+  turnHorizontal(90)
+  walk(50)
+  turnVertical(-90)
+  turnHorizontal(90)
+  walk(50)
+  turnVertical(90)
+  walk(50)
+  turnVertical(90)
+  walk(50)
+  turnVertical(90)
+  walk(50)
+  turnHorizontal(-90)
+  walk(50)
+  turnHorizontal(-90)
+  walk(50)
+  turnHorizontal(-90)
+  walk(50)
+  turnVertical(90)
+  walk(50)
+  turnVertical(90)
+  walk(50)
+  turnVertical(90)
+  walk(50)
+
+  start()
+}
+
+export { drawBox }
