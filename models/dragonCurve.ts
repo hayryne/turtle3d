@@ -3,8 +3,7 @@ import { walk, turnVertical, start } from '../src/turtle'
 const drawDragonCurve = (recursionDepth : number) => {
   let s = 'FX';
 
-  for (let i = 0; i < recursionDepth; i++)
-  {
+  for (let i = 0; i < recursionDepth; i++) {
     let arr = []
 
     s.split('').forEach(c => {

@@ -20,13 +20,21 @@
             display: block;
             font-size: 0;
         }
+
+        #inputArea {
+          position: absolute;
+          z-index: 1;
+          left: 20px;
+          top: 20px;
+        }
     </style>
 </head>
 
 <body>
-    <canvas id="renderCanvas" touch-action="none"></canvas>
+  <div id="inputArea"></div>
+  <canvas id='renderCanvas' touch-action='none'></canvas>
 
-    <script src="main.js"></script>
+  <script src='main.js'></script>
 </body>
 
 </html>
