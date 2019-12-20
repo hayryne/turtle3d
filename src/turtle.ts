@@ -1,14 +1,13 @@
-
 import { Engine } from '@babylonjs/core/Engines/engine'
 import { Scene } from '@babylonjs/core/scene'
-import { Vector3 } from '@babylonjs/core/Maths/math'
+import { Vector3, Color3, Color4 } from '@babylonjs/core/Maths/math'
 import { FreeCamera } from '@babylonjs/core/Cameras/freeCamera'
 import { Mesh } from '@babylonjs/core/Meshes/mesh'
 import { LinesMesh } from '@babylonjs/core/Meshes/linesMesh'
+import { StandardMaterial } from '@babylonjs/core/Materials'
 
 // side-effects only imports allowing Mesh to create default shapes
 import '@babylonjs/core/Meshes/meshBuilder'
-import '@babylonjs/core/Materials/standardMaterial'
 
 enum Direction { Horizontal, Vertical }
 
@@ -16,6 +15,8 @@ const createScene = () : Scene => {
   const canvas = document.getElementById('renderCanvas') as HTMLCanvasElement
   const engine = new Engine(canvas)
   const scene = new Scene(engine)
+
+  scene.clearColor = new Color4(0.2, 0.5, 0.6)
 
   const camera = new FreeCamera('camera', new Vector3(100, 75, 100), scene)
 
@@ -27,15 +28,34 @@ const createScene = () : Scene => {
   return scene
 }
 
+const createTurtle = () : Mesh => {
+  const turtle = Mesh.CreateSphere('turtle', 10, 2, scene)
+  turtle.scaling.z = 2
+
+  var material = new StandardMaterial("turtleSkin", scene);
+  material.emissiveColor = new Color3(0, 1, 0);
+
+  turtle.material = material;
+
+  return turtle
+}
+
 const scene = createScene()
+const turtle = createTurtle()
 
 const actions = [];
 
 const currentAngles = { zenith: 0, azimuth: 0 }
-const positions = { start: Vector3.Zero(), current: Vector3.Zero(), destination: Vector3.Zero() }
 
-const createLine = (pos1 : Vector3, pos2 : Vector3) =>
-  Mesh.CreateTube('line', [pos1, pos2], 0.5, 10, null, null, scene)
+const positions = {
+  start: Vector3.Zero(),
+  current: Vector3.Zero(),
+  destination: Vector3.Zero()
+}
+
+const createLine = (pos1 : Vector3, pos2 : Vector3) => {
+  return Mesh.CreateTube('line', [pos1, pos2], 0.5, 4, null, null, scene)
+}
 
 const walkTowardsCurrentDestination = () : void => {
   const towardsNew = positions.destination.subtract(positions.current).normalize()
@@ -50,6 +70,8 @@ const walkTowardsCurrentDestination = () : void => {
     queueAction(() => {
       walkTowardsCurrentDestination()
       line.dispose()
+
+      turtle.position = positions.current
     })
   } else {
     executeNextAction()
@@ -90,6 +112,8 @@ const turn = (turnAngle : number, direction : Direction) => {
     if (direction === Direction.Vertical) {
       currentAngles.zenith += radians
     }
+
+    turtle.rotation = new Vector3(currentAngles.zenith, currentAngles.azimuth, 0)
 
     executeNextAction()
   }
