@@ -16,7 +16,7 @@ const createScene = () : Scene => {
   const engine = new Engine(canvas)
   const scene = new Scene(engine)
 
-  scene.clearColor = new Color4(0.2, 0.5, 0.6)
+  scene.clearColor = new Color4(1, 0.7, 0.4)
 
   const camera = new FreeCamera('camera', new Vector3(100, 75, 100), scene)
 

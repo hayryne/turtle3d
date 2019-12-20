@@ -1,6 +1,6 @@
-import { walk, turnVertical, start } from '../src/turtle'
+import { walk, turnVertical, start, turnHorizontal } from '../src/turtle'
 
-const drawHilbertCurve = (recursionDepth : number) => {
+const hilbertCurve = (recursionDepth : number, horizontal = false) => {
   let s = 'A';
 
   for (let i = 0; i < recursionDepth; i++) {
@@ -17,11 +17,30 @@ const drawHilbertCurve = (recursionDepth : number) => {
 
   s.split('').forEach(c => {
     if (c == 'F') walk(8);
-    if (c == '+') turnVertical(270)
-    if (c == '-') turnVertical(90)
+    if (c == '+') horizontal ? turnHorizontal(270) : turnVertical(270)
+    if (c == '-') horizontal ? turnHorizontal(90) : turnVertical(90)
   })
+}
+
+const drawHilbertCurve = (recursionDepth : number) => {
+  hilbertCurve(recursionDepth)
+  start()
+}
+
+const drawHilbertBox = (recursionDepth : number) => {
+  for (let i = 0; i < 3; i++) {
+    hilbertCurve(recursionDepth)
+    turnHorizontal(90)
+  }
+
+  hilbertCurve(recursionDepth, true)
+  turnVertical(90)
+  hilbertCurve(recursionDepth)
+  turnVertical(90)
+  turnHorizontal(270)
+  hilbertCurve(recursionDepth, true)
 
   start()
 }
 
-export { drawHilbertCurve }
+export { drawHilbertCurve, drawHilbertBox }
