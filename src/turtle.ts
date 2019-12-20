@@ -33,9 +33,9 @@ const createTurtle = () : Mesh => {
   turtle.scaling.z = 2
 
   var material = new StandardMaterial("turtleSkin", scene);
-  material.emissiveColor = new Color3(0, 1, 0);
+  material.emissiveColor = new Color3(0, 1, 0)
 
-  turtle.material = material;
+  turtle.material = material
 
   return turtle
 }
@@ -43,7 +43,7 @@ const createTurtle = () : Mesh => {
 const scene = createScene()
 const turtle = createTurtle()
 
-const actions = [];
+const actions = []
 
 const currentAngles = { zenith: 0, azimuth: 0 }
 
@@ -113,7 +113,7 @@ const turn = (turnAngle : number, direction : Direction) => {
       currentAngles.zenith += radians
     }
 
-    turtle.rotation = new Vector3(currentAngles.zenith, currentAngles.azimuth, 0)
+    turtle.rotation = new Vector3(-currentAngles.zenith, currentAngles.azimuth, 0)
 
     executeNextAction()
   }
