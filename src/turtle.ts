@@ -1,13 +1,9 @@
-import { Engine } from '@babylonjs/core/Engines/engine'
-import { Scene } from '@babylonjs/core/scene'
-import { Vector3, Color3, Color4 } from '@babylonjs/core/Maths/math'
-import { FreeCamera } from '@babylonjs/core/Cameras/freeCamera'
-import { Mesh } from '@babylonjs/core/Meshes/mesh'
-import { LinesMesh } from '@babylonjs/core/Meshes/linesMesh'
-import { StandardMaterial } from '@babylonjs/core/Materials'
+import { Engine, Scene, SceneLoader, Vector3, Color3, Color4,
+  FreeCamera, Mesh, LinesMesh, StandardMaterial } from 'babylonjs'
 
-// side-effects only imports allowing Mesh to create default shapes
+// side-effects only imports
 import '@babylonjs/core/Meshes/meshBuilder'
+import 'babylonjs-loaders'
 
 enum Direction { Horizontal, Vertical }
 
