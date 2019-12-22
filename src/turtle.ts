@@ -1,5 +1,5 @@
 import { Engine, Scene, SceneLoader, Vector3, Color3, Color4,
-  FreeCamera, Mesh, LinesMesh, StandardMaterial, HemisphericLight } from 'babylonjs'
+  FreeCamera, Mesh, StandardMaterial, HemisphericLight, GlowLayer } from 'babylonjs'
 
 // side-effects only imports
 import '@babylonjs/core/Meshes/meshBuilder'
@@ -19,10 +19,12 @@ const createScene = () : Scene => {
   camera.setTarget(Vector3.Zero())
   camera.attachControl(canvas, true)
 
-  const light = new HemisphericLight('HemiLight', new Vector3(0, 1, 0), scene)
+  const light = new HemisphericLight('light', new Vector3(0, 1, 0), scene)
 
   light.intensity = 0.8
   light.diffuse = new Color3(1, 0, 0)
+
+  const glow = new GlowLayer('glow', scene);
 
   engine.runRenderLoop(() => scene.render())
 
@@ -33,15 +35,20 @@ const createTurtle = () : Mesh => {
   const turtle = Mesh.CreateSphere('turtle', 10, 2, scene)
   turtle.scaling.z = 2
 
-  var material = new StandardMaterial("turtleSkin", scene);
-  material.emissiveColor = new Color3(0, 1, 0)
-
   turtle.material = material
 
   return turtle
 }
 
+const createGlowMaterial = () => {
+  const material = new StandardMaterial('glowMaterial', scene);
+  material.emissiveColor = new Color3(0, 1, 0)
+
+  return material
+}
+
 const scene = createScene()
+const material = createGlowMaterial()
 const turtle = createTurtle()
 
 const actions = []
@@ -61,8 +68,13 @@ const points = {
 
 let mainMesh : Mesh
 
-const createLine = (positions : Vector3[]) =>
-  Mesh.CreateTube('line', positions, 0.5, 4, null, null, scene)
+const createLine = (positions : Vector3[]) => {
+  const line = Mesh.CreateTube('line', positions, 0.5, 4, null, null, scene)
+
+  line.material = material
+
+  return line
+}
 
 const walkTowardsCurrentDestination = () : void => {
   const towardsNew = positions.destination.subtract(positions.current).normalize()
