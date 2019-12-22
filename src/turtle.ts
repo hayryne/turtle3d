@@ -1,5 +1,5 @@
 import { Engine, Scene, SceneLoader, Vector3, Color3, Color4,
-  FreeCamera, Mesh, LinesMesh, StandardMaterial } from 'babylonjs'
+  FreeCamera, Mesh, LinesMesh, StandardMaterial, HemisphericLight } from 'babylonjs'
 
 // side-effects only imports
 import '@babylonjs/core/Meshes/meshBuilder'
@@ -12,12 +12,17 @@ const createScene = () : Scene => {
   const engine = new Engine(canvas)
   const scene = new Scene(engine)
 
-  scene.clearColor = new Color4(1, 0.7, 0.4)
+  scene.clearColor = new Color4(0, 0, 0)
 
   const camera = new FreeCamera('camera', new Vector3(100, 75, 100), scene)
 
   camera.setTarget(Vector3.Zero())
   camera.attachControl(canvas, true)
+
+  const light = new HemisphericLight('HemiLight', new Vector3(0, 1, 0), scene)
+
+  light.intensity = 0.8
+  light.diffuse = new Color3(1, 0, 0)
 
   engine.runRenderLoop(() => scene.render())
 
