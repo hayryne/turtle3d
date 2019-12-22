@@ -54,15 +54,24 @@ const positions = {
   destination: Vector3.Zero()
 }
 
-const createLine = (pos1 : Vector3, pos2 : Vector3) => {
-  return Mesh.CreateTube('line', [pos1, pos2], 0.5, 4, null, null, scene)
+const points = {
+  previous: [positions.start],
+  current: [positions.start],
 }
+
+let mainMesh : Mesh
+
+const createLine = (positions : Vector3[]) =>
+  Mesh.CreateTube('line', positions, 0.5, 4, null, null, scene)
 
 const walkTowardsCurrentDestination = () : void => {
   const towardsNew = positions.destination.subtract(positions.current).normalize()
   const nextPosition = positions.current.add(towardsNew)
 
-  const line = createLine(positions.start, nextPosition)
+  points.current.push(nextPosition)
+
+  const line = createLine(points.current)
+
   positions.current = nextPosition
 
   const destinationReached = positions.current.equalsWithEpsilon(positions.destination, 0.01)
@@ -75,6 +84,14 @@ const walkTowardsCurrentDestination = () : void => {
       turtle.position = positions.current
     })
   } else {
+    points.previous.push(positions.current)
+    points.current = [positions.current]
+
+    line.dispose()
+
+    mainMesh && mainMesh.dispose()
+    mainMesh = createLine(points.previous)
+
     executeNextAction()
   }
 }
