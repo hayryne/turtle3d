@@ -55,7 +55,7 @@ const createParticleSystem = (target : Mesh) => {
   particleSystem.particleTexture = new Texture('../assets/spark.png', scene)
 
   particleSystem.emitter = target
-  particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_STANDARD
+  particleSystem.blendMode = ParticleSystem.BLENDMODE_STANDARD
   particleSystem.emitRate = 1000
   particleSystem.maxLifeTime = 0.5
   particleSystem.maxSize = 0.1
@@ -94,7 +94,8 @@ const createLine = (positions : Vector3[]) => {
 }
 
 const walkTowardsCurrentDestination = () : void => {
-  const towardsNew = positions.destination.subtract(positions.current).normalize()
+  const towardsNew = positions.destination
+    .subtract(positions.current).normalize()
   const nextPosition = positions.current.add(towardsNew)
 
   points.current.push(nextPosition)
@@ -103,7 +104,8 @@ const walkTowardsCurrentDestination = () : void => {
 
   positions.current = nextPosition
 
-  const destinationReached = positions.current.equalsWithEpsilon(positions.destination, 0.01)
+  const destinationReached = positions.current
+    .equalsWithEpsilon(positions.destination, 0.01)
 
   if (!destinationReached) {
     queueAction(() => {
@@ -160,7 +162,7 @@ const turn = (turnAngle : number, direction : Direction) => {
       currentAngles.zenith += radians
     }
 
-    turtle.rotation = new Vector3(-currentAngles.zenith, currentAngles.azimuth, 0)
+    turtle.rotation = new Vector3(-currentAngles.zenith, -currentAngles.azimuth, 0)
 
     executeNextAction()
   }
