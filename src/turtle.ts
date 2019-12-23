@@ -1,5 +1,6 @@
 import { Engine, Scene, SceneLoader, Vector3, Color3, Color4,
-  FreeCamera, Mesh, StandardMaterial, HemisphericLight, GlowLayer } from 'babylonjs'
+  FreeCamera, Mesh, StandardMaterial, HemisphericLight, GlowLayer,
+  ParticleSystem, Texture } from 'babylonjs'
 
 // side-effects only imports
 import '@babylonjs/core/Meshes/meshBuilder'
@@ -24,7 +25,7 @@ const createScene = () : Scene => {
   light.intensity = 0.8
   light.diffuse = new Color3(1, 0, 0)
 
-  const glow = new GlowLayer('glow', scene);
+  const glow = new GlowLayer('glow', scene)
 
   engine.runRenderLoop(() => scene.render())
 
@@ -37,6 +38,8 @@ const createTurtle = () : Mesh => {
 
   turtle.material = material
 
+  createParticleSystem(turtle)
+
   return turtle
 }
 
@@ -45,6 +48,20 @@ const createGlowMaterial = () => {
   material.emissiveColor = new Color3(0, 1, 0)
 
   return material
+}
+
+const createParticleSystem = (target : Mesh) => {
+  const particleSystem = new ParticleSystem('particles', 1000, scene)
+  particleSystem.particleTexture = new Texture('../assets/spark.png', scene)
+
+  particleSystem.emitter = target
+  particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_STANDARD
+  particleSystem.emitRate = 1000
+  particleSystem.maxLifeTime = 0.5
+  particleSystem.maxSize = 0.1
+  particleSystem.maxEmitPower = 25
+
+  particleSystem.start()
 }
 
 const scene = createScene()
