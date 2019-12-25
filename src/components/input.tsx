@@ -9,10 +9,10 @@ export const Input = () => {
   start()
 
   return <div>
-      <textarea id='inputArea' onChange={ e => setValue(e.target.value) }></textarea>
+      <textarea id='inputArea' className='rounded' onChange={ e => setValue(e.target.value) }></textarea>
       <div id ='buttons'>
-        <button onClick={ e => parseAndEval(value) }>start</button>
-        <button onClick={ reset }>reset</button>
+        <button className='btn btn-success' onClick={ e => parseAndEval(value) }>start</button>
+        <button className='btn btn-danger' onClick={ reset }>reset</button>
       </div>
     </div>
 }
