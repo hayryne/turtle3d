@@ -1,7 +1,7 @@
-import { walk, turnVertical, turnHorizontal, start } from '../turtle'
+import { walk, turnHorizontal as turnX, turnVertical as turnY, start } from '../turtle'
 
 const parseAndEval = value => {
-  const commands = value.split(/\r?\n/)
+  const commands = value.trim().split(/\r?\n/)
 
   const getCommand = str => str.split('(')[0]
   const getValue = str => +str.split('(')[1].split(')')[0]
@@ -11,8 +11,8 @@ const parseAndEval = value => {
     const val = getValue(c)
 
     if (cmd === 'walk') walk(val)
-    if (cmd === 'turnHorizontal') turnHorizontal(val)
-    if (cmd === 'turnVertical') turnVertical(val)
+    if (cmd === 'turnX') turnX(val)
+    if (cmd === 'turnY') turnY(val)
   })
 
   start()
