@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useState } from 'react'
-import { start } from '../turtle'
+import { start, reset } from '../turtle'
 import { parseAndEval } from '../utils/parser'
 
 export const Input = () => {
@@ -12,7 +12,7 @@ export const Input = () => {
       <textarea id='inputArea' onChange={ e => setValue(e.target.value) }></textarea>
       <div id ='buttons'>
         <button onClick={ e => parseAndEval(value) }>start</button>
-        <button>reset</button>
+        <button onClick={ reset }>reset</button>
       </div>
     </div>
 }

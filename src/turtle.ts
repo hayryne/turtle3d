@@ -177,9 +177,25 @@ const turn = (turnAngle : number, direction : Direction) => {
   actions.push(turnAction)
 }
 
+const reset = () => {
+  currentAngles.zenith = 0
+  currentAngles.azimuth = 0
+
+  positions.start = Vector3.Zero()
+  positions.current = Vector3.Zero()
+  positions.destination = Vector3.Zero()
+
+  points.previous = [positions.start]
+  points.current = [positions.start]
+
+  turtle.position = positions.start
+
+  mainMesh && mainMesh.dispose()
+}
+
 const turnHorizontal = (angle : number) => turn(angle, Direction.Horizontal)
 const turnVertical = (angle : number) => turn(angle, Direction.Vertical)
 
 const executeNextAction = () => actions.length && actions.shift()()
 
-export { walk, turnHorizontal, turnVertical, executeNextAction as start }
+export { walk, turnHorizontal, turnVertical, executeNextAction as start, reset }
