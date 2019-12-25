@@ -96,6 +96,13 @@ const createLine = (positions : Vector3[]) => {
 const walkTowardsCurrentDestination = () : void => {
   const towardsNew = positions.destination
     .subtract(positions.current).normalize()
+
+  const dis = Vector3.Distance(positions.current, positions.destination)
+
+  if (dis < 1) {
+    towardsNew.multiplyInPlace(new Vector3(dis, dis, dis))
+  }
+
   const nextPosition = positions.current.add(towardsNew)
 
   points.current.push(nextPosition)
@@ -162,7 +169,7 @@ const turn = (turnAngle : number, direction : Direction) => {
       currentAngles.zenith += radians
     }
 
-    turtle.rotation = new Vector3(-currentAngles.zenith, -currentAngles.azimuth, 0)
+    turtle.rotation = new Vector3(-currentAngles.zenith, currentAngles.azimuth, 0)
 
     executeNextAction()
   }
