@@ -15,7 +15,7 @@ const createScene = () : Scene => {
 
   scene.clearColor = new Color4(0, 0, 0)
 
-  const camera = new FreeCamera('camera', new Vector3(100, 75, 100), scene)
+  camera = new FreeCamera('camera', new Vector3(100, 75, 100), scene)
 
   camera.setTarget(Vector3.Zero())
   camera.attachControl(canvas, true)
@@ -83,6 +83,7 @@ const points = {
   current: [positions.start],
 }
 
+let camera : FreeCamera
 let mainMesh : Mesh
 
 const createLine = (positions : Vector3[]) => {
@@ -189,6 +190,8 @@ const reset = () => {
   points.current = [positions.start]
 
   turtle.position = positions.start
+
+  camera.setTarget(Vector3.Zero())
 
   mainMesh && mainMesh.dispose()
 }
