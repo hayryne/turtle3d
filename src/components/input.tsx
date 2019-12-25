@@ -1,5 +1,8 @@
 import * as React from 'react'
 import { useState } from 'react'
+
+import { PresetsSelect } from './presets'
+
 import { start, reset } from '../turtle'
 import { parseAndEval } from '../utils/parser'
 
@@ -9,6 +12,7 @@ export const Input = () => {
   start()
 
   return <div>
+      <PresetsSelect />
       <textarea id='inputArea' className='rounded' onChange={ e => setValue(e.target.value) }></textarea>
       <div id ='buttons'>
         <button className='btn btn-success' onClick={ e => parseAndEval(value) }>start</button>

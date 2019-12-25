@@ -30,9 +30,11 @@
   "dependencies": {
     "@types/react": "^16.9.17",
     "@types/react-dom": "^16.9.4",
+    "@types/react-select": "^3.0.8",
     "babylonjs-loaders": "^4.0.3",
     "bootstrap": "^4.4.1",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "react-select": "^3.0.8"
   }
 }
