@@ -190,6 +190,7 @@ const reset = () => {
   points.current = [positions.start]
 
   turtle.position = positions.start
+  turtle.rotation = Vector3.Zero()
 
   camera.setTarget(Vector3.Zero())
 
