@@ -18,6 +18,11 @@ html, body {
 #buttons {
   display: block;
   clear: both;
+
+  .btn {
+    width: 97px;
+    margin: 5px 5px 5px 0px;
+  }
 }
 
 #inputComponent {
@@ -25,4 +30,10 @@ html, body {
   z-index: 1;
   left: 20px;
   top: 20px;
+}
+
+#inputArea {
+  height: 200px;
+  background-color: #3A3A3A;
+  color: #FFFFFF;
 }
