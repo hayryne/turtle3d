@@ -194,6 +194,8 @@ const reset = () => {
 
   camera.setTarget(Vector3.Zero())
 
+  actions.length = 0
+
   mainMesh && mainMesh.dispose()
 }
 
