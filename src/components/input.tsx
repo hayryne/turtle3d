@@ -11,12 +11,35 @@ export const Input = () => {
 
   start()
 
-  return <div>
-      <PresetsSelect />
-      <textarea id='inputArea' className='rounded' onChange={ e => setValue(e.target.value) }></textarea>
-      <div id ='buttons'>
-        <button className='btn btn-success' onClick={ e => parseAndEval(value) }>start</button>
-        <button className='btn btn-danger' onClick={ reset }>reset</button>
+  return <div className='container pt-2'>
+    <div className='row mt-1'>
+      <div className='col'>
+        <PresetsSelect />
       </div>
     </div>
+    <div className='row mt-1'>
+      <div className='col'>
+        <textarea id='inputArea'
+          className='rounded'
+          onChange={ e => setValue(e.target.value) }
+        />
+      </div>
+    </div>
+    <div className='row mt-1'>
+      <div className='col pr-1'>
+        <button className='btn btn-block btn-success'
+          onClick={ e => parseAndEval(value) }
+        >
+          start
+        </button>
+      </div>
+      <div className='col pl-1'>
+        <button className='btn btn-block btn-danger'
+          onClick={ reset }
+        >
+          reset
+        </button>
+      </div>
+    </div>
+  </div>
 }
