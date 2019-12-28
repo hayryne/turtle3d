@@ -10,7 +10,7 @@ export const PresetsSelect = () => {
 
   const options = models.map(({ name, method }) => ({ label: name, value: method}))
 
-  const drawModel = (model : { label : string, value : Function}) => {
+  const drawModel = model => {
     reset()
     model.value()
   }

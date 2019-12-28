@@ -45,7 +45,7 @@ const createTurtle = () : Mesh => {
 
 const createGlowMaterial = () => {
   const material = new StandardMaterial('glowMaterial', scene);
-  material.emissiveColor = new Color3(0, 1, 0)
+  material.emissiveColor = lineColor
 
   return material
 }
@@ -63,6 +63,8 @@ const createParticleSystem = (target : Mesh) => {
 
   particleSystem.start()
 }
+
+let lineColor : Color3
 
 const scene = createScene()
 const material = createGlowMaterial()
@@ -199,9 +201,13 @@ const reset = () => {
   mainMesh && mainMesh.dispose()
 }
 
+const setLineColor = color => {
+  material.emissiveColor = new Color3(color.r / 255, color.g  / 255, color.b / 255)
+}
+
 const turnHorizontal = (angle : number) => turn(angle, Direction.Horizontal)
 const turnVertical = (angle : number) => turn(angle, Direction.Vertical)
 
 const executeNextAction = () => actions.length && actions.shift()()
 
-export { walk, turnHorizontal, turnVertical, executeNextAction as start, reset }
+export { walk, turnHorizontal, turnVertical, executeNextAction as start, reset, setLineColor }
