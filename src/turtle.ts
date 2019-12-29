@@ -15,7 +15,7 @@ const createScene = () : Scene => {
 
   scene.clearColor = new Color4(0, 0, 0)
 
-  camera = new FreeCamera('camera', new Vector3(100, 75, 100), scene)
+  camera = new FreeCamera('camera', cameraPosition.clone(), scene)
 
   camera.setTarget(Vector3.Zero())
   camera.attachControl(canvas, true)
@@ -66,6 +66,8 @@ const createParticleSystem = (target : Mesh) => {
 
 let lineColor : Color3
 
+const cameraPosition = new Vector3(100, 75, 100)
+
 const scene = createScene()
 const material = createGlowMaterial()
 const turtle = createTurtle()
@@ -87,6 +89,8 @@ const points = {
 
 let camera : FreeCamera
 let mainMesh : Mesh
+let currentMesh : Mesh
+let currentAction : number
 
 const createLine = (positions : Vector3[]) => {
   const line = Mesh.CreateTube('line', positions, 0.5, 4, null, null, scene)
@@ -110,7 +114,7 @@ const walkTowardsCurrentDestination = () : void => {
 
   points.current.push(nextPosition)
 
-  const line = createLine(points.current)
+  const line = currentMesh = createLine(points.current)
 
   positions.current = nextPosition
 
@@ -118,7 +122,7 @@ const walkTowardsCurrentDestination = () : void => {
     .equalsWithEpsilon(positions.destination, 0.01)
 
   if (!destinationReached) {
-    queueAction(() => {
+    currentAction = queueAction(() => {
       walkTowardsCurrentDestination()
       line.dispose()
 
@@ -194,10 +198,14 @@ const reset = () => {
   turtle.position = positions.start
   turtle.rotation = Vector3.Zero()
 
+  camera.position = cameraPosition.clone()
   camera.setTarget(Vector3.Zero())
 
   actions.length = 0
 
+  currentAction && clearTimeout(currentAction)
+
+  currentMesh && currentMesh.dispose()
   mainMesh && mainMesh.dispose()
 }
 

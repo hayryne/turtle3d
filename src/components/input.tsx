@@ -16,7 +16,6 @@ export const Input = () => {
   const rgbToCss = ({ rgb }) => `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`
 
   setLineColor(color.rgb)
-  start()
 
   return <div className='container pt-2'>
     <div className='row mt-1'>
