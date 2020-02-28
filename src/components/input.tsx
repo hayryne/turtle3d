@@ -44,7 +44,7 @@ export const Input = () => {
     <div className='row mt-1'>
       <div className='col pr-1'>
         <button className='btn btn-block btn-success'
-          onClick={ e => parseAndEval(value) }
+          onClick={ e => Function(value + '\n start()')() }
         >
           start
         </button>
