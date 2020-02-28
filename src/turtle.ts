@@ -51,7 +51,7 @@ const createGlowMaterial = () => {
 }
 
 const createParticleSystem = (target : Mesh) => {
-  const particleSystem = new ParticleSystem('particles', 1000, scene)
+  particleSystem = new ParticleSystem('particles', 1000, scene)
   particleSystem.particleTexture = new Texture('../assets/spark.png', scene)
 
   particleSystem.emitter = target
@@ -60,8 +60,6 @@ const createParticleSystem = (target : Mesh) => {
   particleSystem.maxLifeTime = 0.5
   particleSystem.maxSize = 0.1
   particleSystem.maxEmitPower = 25
-
-  particleSystem.start()
 }
 
 let lineColor : Color3
@@ -91,6 +89,7 @@ let camera : FreeCamera
 let mainMesh : Mesh
 let currentMesh : Mesh
 let currentAction : number
+let particleSystem : ParticleSystem
 
 const createLine = (positions : Vector3[]) => {
   const line = Mesh.CreateTube('line', positions, 0.5, 4, null, null, scene)
@@ -207,6 +206,8 @@ const reset = () => {
 
   currentMesh && currentMesh.dispose()
   mainMesh && mainMesh.dispose()
+
+  particleSystem.stop()
 }
 
 const setLineColor = color => {
@@ -218,4 +219,12 @@ const turnVertical = (angle : number) => turn(angle, Direction.Vertical)
 
 const executeNextAction = () => actions.length && actions.shift()()
 
-export { walk, turnHorizontal, turnVertical, executeNextAction as start, reset, setLineColor }
+const start = () => {
+  particleSystem.start()
+
+  actions.push(() => particleSystem.stop())
+
+  executeNextAction()
+}
+
+export { walk, turnHorizontal, turnVertical, start, reset, setLineColor }
